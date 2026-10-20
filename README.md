@@ -36,9 +36,9 @@ Não há instalação de dependências, cadastro ou banco de dados.
 
 ## Privacidade e segurança dos seus dados
 
-Os registros financeiros são armazenados apenas no **localStorage** do navegador. O aplicativo não se conecta a bancos nem envia lançamentos a servidores. O código-fonte deste repositório é público, mas os lançamentos inseridos no site **não são publicados no repositório**.
+Sem configuração Supabase, os registros continuam no **localStorage** do navegador. Com o Supabase configurado e o usuário autenticado, os dados são armazenados em uma tabela privada protegida por Row Level Security (RLS), acessível apenas à conta. O código deste repositório é público, mas não contém dados financeiros dos usuários.
 
-- Os dados não sincronizam entre computadores, celulares e navegadores.
+- Sem o Supabase configurado ou sem login, os dados não sincronizam entre computadores, celulares e navegadores.
 - Limpar os dados do navegador ou usar modo anônimo pode apagá-los.
 - Faça backups em **Meus dados → Backup JSON** e guarde o arquivo em local seguro.
 - Restaurações de backup substituem os dados locais existentes.
@@ -52,10 +52,34 @@ Os registros financeiros são armazenados apenas no **localStorage** do navegado
 
 ```
 controle-gastos/
-├── index.html    # Site completo com estilos e lógica
-└── README.md     # Instruções de uso e publicação
+├── index.html           # Interface e controle financeiro local
+├── cloud-sync.js        # Login e sincronização privada
+├── supabase-config.js   # URL e chave pública do projeto (começa vazio)
+├── supabase-schema.sql  # Tabela, políticas de segurança e gravação segura
+└── README.md            # Instruções de uso e publicação
 ```
 
 ## Licença
 
 Uso pessoal. Nenhuma licença de distribuição adicional foi definida.
+
+
+## Sincronização entre todos os dispositivos (Supabase)
+
+O recurso foi **implementado no site, mas não está ativado enquanto a configuração estiver vazia**. Instalar o plugin Supabase no ChatGPT não cria automaticamente a tabela e não conecta este site ao seu projeto.
+
+**Passos para ativar:**
+
+1. Crie ou escolha seu projeto em [Supabase](https://supabase.com/dashboard).
+2. Abra **SQL Editor**, cole todo o conteúdo de **supabase-schema.sql** e execute. A tabela armazena um JSON privado por usuário; as políticas RLS bloqueiam o acesso de outros usuários; a função de gravação usa versão para evitar sobrescrita sem aviso.
+3. Nas configurações do projeto Supabase, copie a **Project URL** e a **Publishable key** (ou chave anon pública). Cole em **supabase-config.js** como os campos url e publishableKey. A chave service_role, sb_secret_ e senhas **nunca devem ser publicadas**.
+4. Em **Authentication → URL Configuration**, configure **Site URL** como https://lohanrosha02-gif.github.io/controle-gastos/ e inclua essa URL em **Redirect URLs**. Se usar outros domínios, inclua-os também.
+5. Em **Authentication → Providers → Email**, ative o acesso por e-mail (link mágico/OTP). Configure SMTP apropriado se necessário para entrega de e-mails.
+6. Publique a alteração no GitHub Pages. Abra o site em cada dispositivo, vá a **Meus dados → Sincronizar em todos os dispositivos** e entre com o **mesmo e-mail**.
+7. Na primeira sincronização, se já houver registros locais, escolha **Enviar dados deste dispositivo**. Em outro aparelho com dados da nuvem, use **Usar dados da nuvem**.
+
+**Como funciona:** dados sincronizados incluem lançamentos, limites, contas da casa, pagamentos de gás/luz/água, valores fixos de apartamento e condomínio, e dívidas/cobranças com histórico de pagamentos. Depois da primeira importação, alterações locais são enviadas automaticamente quando há sessão válida e internet. O site consulta a nuvem ao abrir, ao voltar à aba e periodicamente enquanto aberto. Desconexões mantêm alterações no navegador para enviar mais tarde.
+
+**Conflitos e segurança:** caso outro aparelho tenha modificado os dados, a gravação é bloqueada pelo controle de versões. O site permite escolher conscientemente entre a cópia local e a nuvem, depois de guardar uma cópia de recuperação no navegador. Os dados não se sincronizam quando o site está fechado, e alterações simultâneas podem exigir essa decisão. Não use contas compartilhadas com pessoas que não devem ver seus dados.
+
+O site mantém backup JSON manual como proteção adicional.
