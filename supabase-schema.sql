@@ -75,3 +75,20 @@ grant execute on function public.meu_bolso_write(bigint,jsonb) to authenticated;
 
 -- The frontend only uses the public/publishable key. Authorization
 -- is enforced by Supabase Auth and PostgreSQL Row Level Security.
+
+-- Habilite notificações Postgres Changes para a mesma tabela.
+-- As políticas RLS limitam eventos à linha do usuário autenticado.
+do $sync$
+begin
+  if not exists(select 1 from pg_catalog.pg_publication where pubname='supabase_realtime') then
+    create publication supabase_realtime;
+  end if;
+  if not exists(
+    select 1 from pg_catalog.pg_publication_tables
+    where pubname='supabase_realtime'
+      and schemaname='public' and tablename='meu_bolso_cloud'
+  ) then
+    alter publication supabase_realtime add table public.meu_bolso_cloud;
+  end if;
+end
+$sync$;
