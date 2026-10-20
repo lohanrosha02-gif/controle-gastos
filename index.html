@@ -302,7 +302,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         if(data.budgets&&typeof data.budgets==="object"&&!Array.isArray(data.budgets))expenseCats.forEach(function(c){if(validAmount(data.budgets[c]))obj.budgets[c]=Math.round(Number(data.budgets[c])*100)/100;});
         if(data.houseBills&&typeof data.houseBills==="object"&&!Array.isArray(data.houseBills)){
           Object.keys(data.houseBills).slice(0,240).forEach(function(month){
-            if(!/^\\d{4}-(0[1-9]|1[0-2])$/.test(month))return;
+            if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return;
             var group=data.houseBills[month];if(!group||typeof group!=="object"||Array.isArray(group))return;
             billDefinitions.forEach(function(def){
               var b=group[def.key];if(!b||typeof b!=="object")return;
@@ -334,7 +334,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       function allEntries(){
         var entries=appState.transactions.slice();
         Object.keys(appState.houseBills||{}).forEach(function(month){
-          if(!/^\\d{4}-(0[1-9]|1[0-2])$/.test(month))return;
+          if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return;
           billDefinitions.forEach(function(def){
             var b=billRecord(month,def);
             if(!b.paid||!validAmount(b.amount))return;
