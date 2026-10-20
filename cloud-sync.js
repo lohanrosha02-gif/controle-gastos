@@ -138,6 +138,7 @@
           return;
         }
         if(m.version===server.version){
+          if(server.payload&&!hasData(local)){api.apply(server.payload);activate(server.version);return;}
           if(server.payload&&!same(local,server.payload)){
             lockForChoice("Os dados deste navegador diferem da nuvem. Escolha a versão que deseja manter.");
             return;
@@ -238,7 +239,11 @@
     if(!window.confirm("Sair e limpar a cópia local dos dados deste navegador?"))return;
     var res=await client.auth.signOut();
     if(res.error){status("Não foi possível sair: "+res.error.message,true);return;}
-    try{localStorage.removeItem(LAST_USER);}catch(e){}
+    try{
+      if(readMeta(current.id).dirty)backupCopy(api.read(),"before-logout-unsynced");
+      localStorage.removeItem(LAST_USER);
+      localStorage.removeItem(metaKey(current.id));
+    }catch(e){}
     api.apply(blank());
     await beginSession(null);
     status("Sessão encerrada. Dados locais deste navegador limpos.",false);
