@@ -8,6 +8,7 @@
   var api=window.MeuBolsoLocal;
   var client=null,user=null,version=null,ready=false,blocked=false,pushing=false,timer=null;
   var sessionNonce=0,manualChoice=false;
+  var liveChannel=null,liveUserId=null;
   var LAST_USER="meu-bolso-cloud-last-user";
   var META_PREFIX="meu-bolso-cloud-meta-v1:";
   var BACKUP_PREFIX="meu-bolso-cloud-recovery:";
@@ -116,8 +117,31 @@
     if(user&&ready&&!blocked){status("Alterações aguardando envio...",false);scheduleFlush();}
     else if(user){status("Mudança salva neste dispositivo. Resolva a sincronização para enviá-la.",true);}
   }
+  function stopLive(){
+    if(liveChannel&&client&&typeof client.removeChannel==="function"){
+      client.removeChannel(liveChannel).catch(function(){});
+    }
+    liveChannel=null;liveUserId=null;
+  }
+  function startLive(){
+    if(!user||!client||typeof client.channel!=="function")return;
+    if(liveUserId===user.id&&liveChannel)return;
+    stopLive();
+    var uid=user.id;
+    liveUserId=uid;
+    liveChannel=client.channel("meu-bolso-owner-"+uid)
+      .on("postgres_changes",{
+        event:"*",schema:"public",table:"meu_bolso_cloud",filter:"user_id=eq."+uid
+      },function(){
+        if(user&&user.id===uid)refresh();
+      })
+      .subscribe(function(state){
+        if(state==="CHANNEL_ERROR")status("Conexão ao vivo indisponível. Continuaremos verificando os dados periodicamente.",true);
+      });
+  }
   async function beginSession(next){
     var run=++sessionNonce;
+    if(!next||!user||user.id!==next.id)stopLive();
     user=next||null;ready=false;blocked=false;manualChoice=false;
     version=null;setVisibility();
     if(!user){status(client?"Entre com seu e-mail para sincronizar com outros dispositivos.":"Sincronização não configurada.",false);return;}
@@ -126,6 +150,7 @@
     try{
       var server=await remote();
       if(run!==sessionNonce||!user)return;
+      startLive();
       var m=readMeta(user.id);
       var local=api.read();
       if(m.version!==null){
