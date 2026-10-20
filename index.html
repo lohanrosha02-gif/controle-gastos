@@ -122,6 +122,50 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
 @media(max-width:750px){.bills-summary{grid-template-columns:1fr 1fr}.bills-total:first-child{grid-column:1/-1}.bills-shortcut{align-items:flex-start;flex-direction:column}.bills-shortcut .btn{width:100%}.bottom-nav button{min-width:0;flex:1}}
 @media(max-width:480px){.bills-grid{grid-template-columns:1fr}.bills-total{padding:15px}.bills-total strong{font-size:20px}.bill-actions{grid-template-columns:1fr 1fr}}
 
+
+/* DIVIDAS E COBRANCAS | Meu Bolso */
+.debt-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:0 0 24px}
+.debt-total{border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--surface)}
+.debt-total small{display:block;font-size:11px;font-weight:750;color:var(--muted);margin-bottom:11px}
+.debt-total strong{display:block;font-size:clamp(20px,2.3vw,28px);letter-spacing:-.6px;color:var(--ink);overflow-wrap:anywhere}
+.debt-total.receivable{background:var(--green-tint)}
+.debt-section{margin:0 0 26px}
+.debt-section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin:0 0 14px}
+.debt-section-head h2{font-size:20px;letter-spacing:-.45px;margin:0 0 4px}
+.debt-section-head p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+.debt-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:13px}
+.debt-card{display:flex;flex-direction:column;gap:14px;padding:20px;border:1px solid var(--line);background:var(--surface);border-radius:17px;min-width:0}
+.debt-card.is-settled{background:linear-gradient(135deg,var(--surface),var(--green-tint));border-color:#badba4}
+.debt-card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.debt-card-top h3{font-size:16px;margin:0 0 4px;color:var(--ink);overflow-wrap:anywhere}
+.debt-card-top p{font-size:11px;margin:0;color:var(--muted);overflow-wrap:anywhere}
+.debt-pill{font-size:10px;font-weight:850;padding:6px 8px;background:var(--surface2);color:var(--muted);border-radius:99px;white-space:nowrap}
+.debt-card.is-settled .debt-pill{background:#e1f3d8;color:#376d2b}
+.debt-money{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.debt-money div{background:var(--surface2);padding:12px;border-radius:12px;min-width:0}
+.debt-money span{font-size:10px;font-weight:760;color:var(--muted);display:block;margin-bottom:7px}
+.debt-money strong{font-size:clamp(17px,2.2vw,21px);color:var(--ink);overflow-wrap:anywhere}
+.debt-money .remaining strong{color:var(--red)}
+.debt-track{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.debt-track span{display:block;height:100%;border-radius:99px;background:var(--green);transition:width .2s}
+.debt-meta{font-size:11px;line-height:1.5;color:var(--muted);margin:0}
+.debt-payment{display:flex;gap:8px;margin-top:auto}
+.debt-payment input{width:0;min-width:0;flex:1;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 11px}
+.debt-payment .btn{flex-shrink:0;font-size:11px;min-height:42px;padding:10px 12px}
+.debt-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.debt-buttons .btn{font-size:11px;min-height:35px;padding:8px 11px}
+.debt-empty{padding:22px;border:1px dashed var(--line);border-radius:14px;background:var(--surface2);color:var(--muted);font-size:12px;line-height:1.6}
+.debt-callout{font-size:12px;line-height:1.7;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:13px;padding:14px 17px}
+.debt-callout strong{color:var(--ink)}
+.debt-shortcut{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px;border:1px solid var(--line);border-radius:16px;padding:17px 20px;background:var(--surface)}
+.debt-shortcut h2{margin:0 0 5px;font-size:16px}
+.debt-shortcut p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+.debt-shortcut .btn{flex-shrink:0}
+.debt-form-info{margin:0 0 15px;color:var(--muted);font-size:11px;line-height:1.6}
+@media(max-width:850px){.debt-totals{gap:8px}.debt-total{padding:15px}.debt-card{padding:16px}.bottom-nav button{min-width:0!important;padding-inline:1px;font-size:9px}.bottom-nav .icon{width:18px;height:18px}}
+@media(max-width:620px){.debt-totals{grid-template-columns:1fr 1fr}.debt-total.receivable{grid-column:1/-1}.debt-section-head{align-items:flex-start;flex-direction:column}.debt-section-head .btn{width:100%}.debt-shortcut{flex-direction:column;align-items:flex-start}.debt-shortcut .btn{width:100%}}
+@media(max-width:440px){.debt-cards{grid-template-columns:1fr}.debt-money strong{font-size:18px}}
+
 </style>
 </head>
 <body>
@@ -155,6 +199,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         <button class="nav-link active" data-page-link="dashboard"><svg class="icon"><use href="#i-home"/></svg>Visão geral</button>
         <button class="nav-link" data-page-link="transactions"><svg class="icon"><use href="#i-list"/></svg>Lançamentos</button>
         <button class="nav-link" data-page-link="bills"><svg class="icon"><use href="#i-home"/></svg>Contas da casa</button>
+        <button class="nav-link" data-page-link="debts"><svg class="icon"><use href="#i-wallet"/></svg>Dívidas e cobranças</button>
         <button class="nav-link" data-page-link="budgets"><svg class="icon"><use href="#i-target"/></svg>Limites de gastos</button>
         <button class="nav-link" data-page-link="settings"><svg class="icon"><use href="#i-settings"/></svg>Meus dados</button>
       </nav>
@@ -178,6 +223,10 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
             <article class="stat-card"><div class="stat-top"><span class="stat-label">Saídas do mês</span><span class="stat-icon red"><svg class="icon"><use href="#i-arrowup"/></svg></span></div><div class="stat-value" id="expense">R$ 0,00</div><div class="stat-sub">Tudo que você gastou</div></article>
             <article class="stat-card"><div class="stat-top"><span class="stat-label">Taxa de economia</span><span class="stat-icon blue"><svg class="icon"><use href="#i-trend"/></svg></span></div><div class="stat-value" id="savings">—</div><div class="stat-sub">Entradas menos saídas, em %</div></article>
           </div>
+          <section class="debt-shortcut">
+            <div><h2>Dívidas e cobranças</h2><p id="dashboardDebtSummary">Veja quanto falta receber e pagar, inclusive as dívidas da Bianca.</p></div>
+            <button class="btn" data-page-link="debts">Ver dívidas</button>
+          </section>
           <section class="bills-shortcut">
             <div><h2>Contas da casa</h2><p id="dashboardBillsSummary">Parcela do apartamento, condomínio, gás, luz e água.</p></div>
             <button class="btn btn-primary" data-page-link="bills">Gerenciar contas</button>
@@ -210,6 +259,27 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           <div class="bills-grid" id="billsGrid"></div>
           <div class="bills-help"><strong>Como funciona:</strong> apartamento (R$ 625) e condomínio (R$ 180) aparecem automaticamente todos os meses. Preencha gás, luz e água conforme receber as contas. Clique em <strong>Marcar como pago</strong> somente depois de pagar. As contas pagas entram nas saídas e nos gráficos do mês selecionado, sem duplicar o lançamento.</div>
         </section>
+        <section id="page-debts" class="page" aria-labelledby="debtsTitle">
+          <div class="page-heading"><div><p class="eyebrow">ACOMPANHAMENTO</p><h1 id="debtsTitle">Dívidas e cobranças</h1><p>Registre valores, pagamentos parciais e veja quanto falta quitar ou receber.</p></div></div>
+          <div class="debt-totals">
+            <article class="debt-total receivable"><small>Falta receber de outras pessoas</small><strong id="debtTotalReceivable">R$ 0,00</strong></article>
+            <article class="debt-total"><small>Falta pagar nas minhas dívidas</small><strong id="debtTotalMine">R$ 0,00</strong></article>
+            <article class="debt-total"><small>Falta pagar nas dívidas da Bianca</small><strong id="debtTotalBianca">R$ 0,00</strong></article>
+          </div>
+          <section class="debt-section">
+            <div class="debt-section-head"><div><h2>Quem me deve</h2><p id="debtSummaryReceivable">Pessoas, valores recebidos e saldo a receber.</p></div><button class="btn btn-primary" type="button" data-action="debt-add" data-debt-kind="receivable">+ Adicionar pessoa</button></div>
+            <div class="debt-cards" id="debtListReceivable"></div>
+          </section>
+          <section class="debt-section">
+            <div class="debt-section-head"><div><h2>Minhas dívidas</h2><p id="debtSummaryMine">Quanto eu devo, já paguei e falta pagar.</p></div><button class="btn btn-primary" type="button" data-action="debt-add" data-debt-kind="mine">+ Adicionar dívida</button></div>
+            <div class="debt-cards" id="debtListMine"></div>
+          </section>
+          <section class="debt-section">
+            <div class="debt-section-head"><div><h2>Dívidas da Bianca</h2><p id="debtSummaryBianca">Controle separado das dívidas da Bianca.</p></div><button class="btn btn-primary" type="button" data-action="debt-add" data-debt-kind="bianca">+ Adicionar dívida</button></div>
+            <div class="debt-cards" id="debtListBianca"></div>
+          </section>
+          <p class="debt-callout"><strong>Importante:</strong> os pagamentos registrados aqui atualizam o controle da dívida, mas não lançam valores automaticamente no saldo financeiro. Isso evita contar em dobro uma entrada ou saída que você já registrou nos lançamentos. Os registros ficam apenas neste navegador e entram no backup JSON.</p>
+        </section>
         <section id="page-budgets" class="page" aria-labelledby="budgetsTitle">
           <div class="page-heading"><div><p class="eyebrow">PLANEJAMENTO</p><h1 id="budgetsTitle">Limites de gastos</h1><p>Defina quanto pode gastar em cada categoria, por mês.</p></div><button class="btn btn-primary" data-action="budget"><svg class="icon"><use href="#i-plus"/></svg>Definir limite</button></div>
           <div class="summary-strip"><div><small>Total de limites mensais</small><strong id="totalBudgets">R$ 0,00</strong></div><div><small>Gastos nas categorias com limite</small><strong id="usedBudgets">R$ 0,00</strong></div><div><small>Limites definidos</small><strong id="countBudgets">0</strong><p>Os mesmos limites valem para todos os meses.</p></div></div>
@@ -218,7 +288,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         <section id="page-settings" class="page" aria-labelledby="settingsTitle">
           <div class="page-heading"><div><p class="eyebrow">PRIVACIDADE E BACKUP</p><h1 id="settingsTitle">Meus dados</h1><p>Seu controle financeiro fica guardado neste navegador.</p></div></div>
           <div class="settings-grid">
-            <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-download"/></svg></span><h2>Exportar seus dados</h2><p>Baixe uma planilha CSV dos lançamentos ou um backup completo em JSON, incluindo limites e contas da casa.</p><div class="settings-actions"><button class="btn btn-primary" data-action="csv"><svg class="icon small-icon"><use href="#i-download"/></svg>Exportar CSV</button><button class="btn" data-action="backup"><svg class="icon small-icon"><use href="#i-download"/></svg>Backup JSON</button></div></section>
+            <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-download"/></svg></span><h2>Exportar seus dados</h2><p>Baixe uma planilha CSV dos lançamentos ou um backup completo em JSON, incluindo limites, contas da casa e dívidas.</p><div class="settings-actions"><button class="btn btn-primary" data-action="csv"><svg class="icon small-icon"><use href="#i-download"/></svg>Exportar CSV</button><button class="btn" data-action="backup"><svg class="icon small-icon"><use href="#i-download"/></svg>Backup JSON</button></div></section>
             <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-upload"/></svg></span><h2>Restaurar backup</h2><p>Importe um arquivo JSON criado pelo Meu Bolso. A restauração substitui os lançamentos e limites atuais.</p><div class="settings-actions"><button class="btn" data-action="import"><svg class="icon small-icon"><use href="#i-upload"/></svg>Importar JSON</button><input type="file" id="importFile" accept=".json,application/json" class="hidden"></div></section>
             <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-shield"/></svg></span><h2>Privacidade local</h2><p>Sem conta, sem conexão bancária, sem envio para servidores. Seus dados não são sincronizados entre dispositivos. Para não perder informações, exporte backups regularmente.</p><div class="alert"><strong>Importante:</strong> apagar os dados do navegador ou navegar em modo anônimo pode eliminar seus registros.</div></section>
             <section class="card settings-card"><span class="icon-circle" style="background:var(--red-tint);color:var(--red)"><svg class="icon"><use href="#i-trash"/></svg></span><h2>Apagar informações</h2><p>Exclua todos os lançamentos e limites armazenados neste navegador. Esta ação é permanente.</p><div class="settings-actions"><button class="btn btn-danger" data-action="erase">Apagar todos os dados</button></div></section>
@@ -231,6 +301,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
     <button class="active" data-page-link="dashboard"><svg class="icon"><use href="#i-home"/></svg>Início</button>
     <button data-page-link="transactions"><svg class="icon"><use href="#i-list"/></svg>Lançamentos</button>
     <button data-page-link="bills"><svg class="icon"><use href="#i-home"/></svg>Casa</button>
+    <button data-page-link="debts"><svg class="icon"><use href="#i-wallet"/></svg>Dívidas</button>
     <button data-page-link="budgets"><svg class="icon"><use href="#i-target"/></svg>Limites</button>
     <button data-page-link="settings"><svg class="icon"><use href="#i-settings"/></svg>Dados</button>
   </nav>
@@ -248,6 +319,24 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           <div class="field span-2"><label for="note">Observações (opcional)</label><textarea id="note" maxlength="300" placeholder="Algum detalhe importante..."></textarea></div>
         </div>
         <div class="modal-actions"><button type="button" class="btn btn-danger hidden" id="deleteInModal">Excluir</button><div class="right"><button type="button" class="btn" data-action="close">Cancelar</button><button type="submit" class="btn btn-primary">Salvar lançamento</button></div></div>
+      </form>
+    </div>
+  </div>
+  <div class="overlay" id="debtOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="debtModalTitle">
+      <div class="modal-head"><h2 id="debtModalTitle">Nova dívida</h2><button type="button" class="modal-x" data-action="close" aria-label="Fechar"><svg class="icon"><use href="#i-x"/></svg></button></div>
+      <form id="debtForm">
+        <input id="debtId" type="hidden">
+        <div class="form-grid">
+          <div class="field span-2"><label for="debtKind">Área</label><select id="debtKind" required><option value="receivable">Quem me deve</option><option value="mine">Minhas dívidas</option><option value="bianca">Dívidas da Bianca</option></select></div>
+          <div class="field span-2"><label for="debtParty" id="debtPartyLabel">Quem está me devendo?</label><input id="debtParty" maxlength="90" placeholder="Nome da pessoa" autocomplete="off"></div>
+          <div class="field span-2"><label for="debtDescription">Descrição da dívida *</label><input id="debtDescription" type="text" maxlength="120" placeholder="Ex.: Dinheiro emprestado, compra parcelada..." required autocomplete="off"></div>
+          <div class="field"><label for="debtAmount">Valor total (R$) *</label><input id="debtAmount" type="number" inputmode="decimal" min="0.01" max="999999999.99" step="0.01" required placeholder="0,00"></div>
+          <div class="field"><label for="debtInitial">Já pago / recebido (R$)</label><input id="debtInitial" type="number" inputmode="decimal" min="0" max="999999999.99" step="0.01" value="0"></div>
+          <div class="field span-2"><label for="debtNote">Observações (opcional)</label><textarea id="debtNote" maxlength="300" placeholder="Detalhes que deseja lembrar..."></textarea></div>
+        </div>
+        <p class="debt-form-info">Depois de cadastrar, você pode registrar pagamentos aos poucos. O valor “já pago” corresponde ao que havia sido pago antes do cadastro; os pagamentos posteriores ficam registrados separadamente.</p>
+        <div class="modal-actions"><div class="right"><button type="button" class="btn" data-action="close">Cancelar</button><button class="btn btn-primary" type="submit">Salvar</button></div></div>
       </form>
     </div>
   </div>
@@ -287,7 +376,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       function validAmount(v){var n=Number(v);return Number.isFinite(n)&&n>0&&n<=999999999.99;}
       function validDate(s){if(typeof s!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;var d=new Date(s+"T12:00:00");return !isNaN(d.getTime())&&d.getFullYear()===Number(s.slice(0,4))&&d.getMonth()+1===Number(s.slice(5,7))&&d.getDate()===Number(s.slice(8,10));}
       function sanitize(data){
-        var obj={transactions:[],budgets:{},houseBills:{}};
+        var obj={transactions:[],budgets:{},houseBills:{},debts:[]};
         if(!data||typeof data!=="object"||!Array.isArray(data.transactions))return obj;
         var seen=new Set();
         data.transactions.slice(0,20000).forEach(function(t){
@@ -314,9 +403,34 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
             });
           });
         }
+        if(Array.isArray(data.debts)){
+          var debtIds=new Set();
+          data.debts.slice(0,3000).forEach(function(d){
+            if(!d||!["receivable","mine","bianca"].includes(d.kind))return;
+            var description=String(d.description||"").trim().slice(0,120);
+            var total=Number(d.total),paidInitial=Number(d.paidInitial||0);
+            if(!description||!validAmount(total)||!Number.isFinite(paidInitial)||paidInitial<0||paidInitial>total)return;
+            var ident=String(d.id||"").slice(0,80)||newId();
+            if(debtIds.has(ident))ident=newId();debtIds.add(ident);
+            var paidSoFar=Math.round(paidInitial*100);
+            var payments=[],seenPayments=new Set();
+            if(Array.isArray(d.payments))d.payments.slice(0,2000).forEach(function(p){
+              if(!p||!validAmount(p.amount)||!validDate(p.date))return;
+              var cents=Math.round(Number(p.amount)*100);
+              if(paidSoFar+cents>Math.round(total*100))return;
+              var payId=String(p.id||"").slice(0,80)||newId();
+              if(seenPayments.has(payId))payId=newId();seenPayments.add(payId);
+              payments.push({id:payId,amount:cents/100,date:p.date});paidSoFar+=cents;
+            });
+            obj.debts.push({id:ident,kind:d.kind,party:String(d.party||"").trim().slice(0,90),
+              description:description,total:Math.round(total*100)/100,
+              paidInitial:Math.round(paidInitial*100)/100,payments:payments,
+              note:String(d.note||"").slice(0,300),createdAt:Number.isFinite(Number(d.createdAt))?Number(d.createdAt):0});
+          });
+        }
         return obj;
       }
-      function loadState(){try{var saved=localStorage.getItem(KEY);return saved?sanitize(JSON.parse(saved)):{transactions:[],budgets:{},houseBills:{}};}catch(e){return {transactions:[],budgets:{},houseBills:{}};}}
+      function loadState(){try{var saved=localStorage.getItem(KEY);return saved?sanitize(JSON.parse(saved)):{transactions:[],budgets:{},houseBills:{},debts:[]};}catch(e){return {transactions:[],budgets:{},houseBills:{},debts:[]};}}
       function save(){try{localStorage.setItem(KEY,JSON.stringify(appState));return true;}catch(e){toast("Não foi possível salvar. Verifique o espaço do navegador.");return false;}}
       function newId(){return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,11);}
       function money(v){return currency.format(v||0);}
@@ -357,7 +471,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         setText("balance",money(accrued));setText("income",money(s.income));setText("expense",money(s.expense));
         setText("savings",s.income>0?Math.round((s.income-s.expense)/s.income*100)+"%":"—");
         document.querySelectorAll(".month-label").forEach(function(n){n.textContent=monthFormat.format(monthDate(selectedMonth));});
-        renderChart();renderDonut(list,s.expense);renderRecent(list);renderBudgets(list);renderTransactions(list);renderBills();
+        renderChart();renderDonut(list,s.expense);renderRecent(list);renderBudgets(list);renderTransactions(list);renderBills();renderDebts();
       }
 
       function renderBills(){
@@ -402,6 +516,87 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           render();
           toast(toggle?(paid?"Conta marcada como paga.":"Pagamento desmarcado."):"Valor salvo para "+monthFormat.format(monthDate(selectedMonth))+".");
         }
+      }
+
+      function debtPaid(d){
+        return (Math.round(Number(d.paidInitial||0)*100)+(d.payments||[]).reduce(function(n,p){return n+Math.round(Number(p.amount)*100);},0))/100;
+      }
+      function debtRemaining(d){return Math.max(0,(Math.round(d.total*100)-Math.round(debtPaid(d)*100))/100);}
+      function renderDebts(){
+        if(!Array.isArray(appState.debts))appState.debts=[];
+        var configs=[
+          {key:"receivable",id:"Receivable",name:"a receber"},
+          {key:"mine",id:"Mine",name:"das minhas dívidas"},
+          {key:"bianca",id:"Bianca",name:"das dívidas da Bianca"}
+        ];
+        configs.forEach(function(config){
+          var group=appState.debts.filter(function(d){return d.kind===config.key;});
+          var total=group.reduce(function(n,d){return n+d.total;},0);
+          var paid=group.reduce(function(n,d){return n+debtPaid(d);},0);
+          var remaining=Math.max(0,Math.round((total-paid)*100)/100);
+          setText("debtTotal"+config.id,money(remaining));
+          setText("debtSummary"+config.id,group.length+" registro(s) · Total "+money(total)+" · "+(config.key==="receivable"?"Recebido ":"Pago ")+money(paid));
+          var target=id("debtList"+config.id);
+          if(!group.length){target.innerHTML='<p class="debt-empty">Nada cadastrado ainda. Use o botão acima para adicionar o primeiro registro.</p>';return;}
+          target.innerHTML=group.slice().sort(function(a,b){return b.createdAt-a.createdAt;}).map(function(d){
+            var amountPaid=debtPaid(d),left=debtRemaining(d),done=left<0.005;
+            var progress=Math.min(100,Math.max(0,amountPaid/d.total*100)).toFixed(2);
+            var partyLabel=d.party?(config.key==="receivable"?"Pessoa: ":"Para: ")+d.party:(config.key==="receivable"?"Pessoa não informada":"Credor não informado");
+            return '<article class="debt-card '+(done?"is-settled":"")+'">'+
+              '<div class="debt-card-top"><div><h3>'+esc(d.description)+'</h3><p>'+esc(partyLabel)+'</p></div><span class="debt-pill">'+(done?"Quitada":config.key==="receivable"?"A receber":"A pagar")+'</span></div>'+
+              '<div class="debt-money"><div><span>'+(config.key==="receivable"?"Recebido":"Pago")+'</span><strong>'+money(amountPaid)+'</strong></div><div class="remaining"><span>Falta '+(config.key==="receivable"?"receber":"pagar")+'</span><strong>'+money(left)+'</strong></div></div>'+
+              '<div class="debt-track" role="progressbar" aria-label="Percentual pago" aria-valuenow="'+Math.round(progress)+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+progress+'%"></span></div>'+
+              '<p class="debt-meta">Valor total: '+money(d.total)+' · '+d.payments.length+' pagamento(s) registrado(s)'+(d.note?" · "+esc(d.note):"")+'</p>'+
+              (!done?'<div class="debt-payment"><input type="number" inputmode="decimal" min="0.01" step="0.01" max="'+left.toFixed(2)+'" id="debt-payment-'+esc(d.id)+'" placeholder="Valor do pagamento (R$)" aria-label="Valor do novo pagamento"><button class="btn btn-primary" data-action="debt-pay" data-id="'+esc(d.id)+'">Registrar</button></div>':'')+
+              '<div class="debt-buttons"><button class="btn" data-action="debt-edit" data-id="'+esc(d.id)+'">Editar</button>'+
+              (d.payments.length?'<button class="btn" data-action="debt-undo" data-id="'+esc(d.id)+'">Desfazer último pagamento</button>':'')+
+              '<button class="btn btn-danger" data-action="debt-delete" data-id="'+esc(d.id)+'">Excluir</button></div></article>';
+          }).join("");
+        });
+        var outstanding=function(kind){return appState.debts.filter(function(d){return d.kind===kind;}).reduce(function(n,d){return n+debtRemaining(d);},0);};
+        setText("dashboardDebtSummary",money(outstanding("receivable"))+" a receber · "+money(outstanding("mine"))+" em minhas dívidas · "+money(outstanding("bianca"))+" da Bianca");
+      }
+      function updateDebtPartyLabel(){
+        var kind=id("debtKind").value;
+        id("debtPartyLabel").textContent=kind==="receivable"?"Quem está me devendo?":"Para quem é a dívida? (opcional)";
+        id("debtParty").placeholder=kind==="receivable"?"Nome de quem deve":"Pessoa, empresa ou instituição";
+        id("debtParty").required=kind==="receivable";
+      }
+      function openDebtForm(kind,d){
+        id("debtForm").reset();
+        id("debtId").value=d?d.id:"";
+        id("debtKind").value=d?d.kind:kind||"receivable";
+        id("debtParty").value=d?d.party:"";
+        id("debtDescription").value=d?d.description:"";
+        id("debtAmount").value=d?d.total:"";
+        id("debtInitial").value=d?d.paidInitial:0;
+        id("debtNote").value=d?d.note:"";
+        updateDebtPartyLabel();
+        setText("debtModalTitle",d?"Editar registro":id("debtKind").value==="receivable"?"Adicionar pessoa que me deve":"Adicionar dívida");
+        openModal("debtOverlay");id("debtDescription").focus();
+      }
+      function recordDebtPayment(key){
+        var d=appState.debts.find(function(x){return x.id===key;});
+        if(!d)return;
+        var input=id("debt-payment-"+key);
+        if(!input)return;
+        var amount=Math.round(Number(input.value)*100)/100,left=debtRemaining(d);
+        if(!input.value.trim()||!validAmount(amount)){toast("Informe o valor recebido ou pago.");input.focus();return;}
+        if(Math.round(amount*100)>Math.round(left*100)){toast("O pagamento não pode ultrapassar o valor que falta.");input.focus();return;}
+        d.payments.push({id:newId(),amount:amount,date:today()});
+        if(save()){render();toast("Pagamento de "+money(amount)+" registrado.");}
+      }
+      function undoDebtPayment(key){
+        var d=appState.debts.find(function(x){return x.id===key;});if(!d||!d.payments.length)return;
+        var last=d.payments[d.payments.length-1];
+        if(!confirm("Desfazer o último pagamento de "+money(last.amount)+"?"))return;
+        d.payments.pop();if(save()){render();toast("Último pagamento desfeito.");}
+      }
+      function deleteDebt(key){
+        var d=appState.debts.find(function(x){return x.id===key;});if(!d)return;
+        if(!confirm('Excluir "'+d.description+'" e seu histórico de pagamentos?'))return;
+        appState.debts=appState.debts.filter(function(x){return x.id!==key;});
+        if(save()){render();toast("Registro excluído.");}
       }
       function renderChart(){
         var months=Array.from({length:6},function(_,i){var m=addMonths(selectedMonth,i-5);return {key:m,summary:summarize(allEntries().filter(function(t){return monthOf(t.date)===m;}))};});
@@ -456,9 +651,9 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         id("allTransactions").innerHTML=list.length?list.map(row).join(""):empty("Nada por aqui","Experimente mudar os filtros ou adicionar um lançamento neste mês.");
       }
       function navigate(target){
-        if(!["dashboard","transactions","bills","budgets","settings"].includes(target))return;
+        if(!["dashboard","transactions","bills","debts","budgets","settings"].includes(target))return;
         page=target;
-        var names={dashboard:"Visão geral",transactions:"Lançamentos",bills:"Contas da casa",budgets:"Limites de gastos",settings:"Meus dados"};
+        var names={dashboard:"Visão geral",transactions:"Lançamentos",bills:"Contas da casa",debts:"Dívidas e cobranças",budgets:"Limites de gastos",settings:"Meus dados"};
         document.querySelectorAll(".page").forEach(function(s){s.classList.toggle("active",s.id==="page-"+target);});
         document.querySelectorAll("[data-page-link]").forEach(function(b){b.classList.toggle("active",b.dataset.pageLink===target);});
         setText("breadcrumb",names[target]);window.scrollTo({top:0,behavior:"smooth"});
@@ -490,7 +685,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         var rows=allEntries().slice().sort(byRecent).map(function(t){return [t.virtualBill?monthOf(t.date)+" (mês de referência)":prettyDate(t.date),t.type==="income"?"Entrada":"Saída",t.description,t.category,t.amount.toFixed(2).replace(".",","),t.note].map(safeCsv).join(";");});
         download("meu-bolso-lancamentos.csv","\uFEFF"+[header.map(safeCsv).join(";")].concat(rows).join("\r\n"),"text/csv;charset=utf-8");toast("Planilha CSV exportada.");
       }
-      function backup(){download("meu-bolso-backup-"+today()+".json",JSON.stringify({version:1,exportedAt:new Date().toISOString(),transactions:appState.transactions,budgets:appState.budgets,houseBills:appState.houseBills},null,2),"application/json;charset=utf-8");toast("Backup completo exportado.");}
+      function backup(){download("meu-bolso-backup-"+today()+".json",JSON.stringify({version:1,exportedAt:new Date().toISOString(),transactions:appState.transactions,budgets:appState.budgets,houseBills:appState.houseBills,debts:appState.debts},null,2),"application/json;charset=utf-8");toast("Backup completo exportado.");}
       function handleAction(b){
         var action=b.dataset.action;
         if(action==="add")openTransaction(null);
@@ -500,13 +695,18 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         if(action==="bills")navigate("bills");
         if(action==="bill-save")editBill(b.dataset.bill,false);
         if(action==="bill-toggle")editBill(b.dataset.bill,true);
+        if(action==="debt-add")openDebtForm(b.dataset.debtKind,null);
+        if(action==="debt-edit"){var de=appState.debts.find(function(x){return x.id===b.dataset.id;});if(de)openDebtForm(null,de);}
+        if(action==="debt-pay")recordDebtPayment(b.dataset.id);
+        if(action==="debt-undo")undoDebtPayment(b.dataset.id);
+        if(action==="debt-delete")deleteDebt(b.dataset.id);
         if(action==="close")closeModals();
         if(action==="csv")exportCsv();
         if(action==="backup")backup();
         if(action==="import")id("importFile").click();
         if(action==="erase"){
           if(prompt('Isso apagará TODOS os dados deste navegador. Digite APAGAR para confirmar:')!=="APAGAR")return;
-          appState={transactions:[],budgets:{},houseBills:{}};save();render();toast("Todos os dados foram apagados.");
+          appState={transactions:[],budgets:{},houseBills:{},debts:[]};save();render();toast("Todos os dados foram apagados.");
         }
       }
       document.addEventListener("click",function(e){
@@ -532,6 +732,29 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         save();closeModals();render();toast(record?"Lançamento atualizado.":"Lançamento registrado.");navigate("transactions");
       });
       id("deleteInModal").addEventListener("click",function(){removeTransaction(id("transactionId").value);});
+      id("debtKind").addEventListener("change",updateDebtPartyLabel);
+      id("debtForm").addEventListener("submit",function(event){
+        event.preventDefault();
+        var formId=id("debtId").value;
+        var existing=appState.debts.find(function(d){return d.id===formId;});
+        var kind=id("debtKind").value,party=id("debtParty").value.trim(),description=id("debtDescription").value.trim();
+        var amount=Number(id("debtAmount").value),initial=Number(id("debtInitial").value);
+        if(!["receivable","mine","bianca"].includes(kind)||!description||!validAmount(amount)||!Number.isFinite(initial)||initial<0||(kind==="receivable"&&!party)){
+          toast("Preencha os dados obrigatórios e confira os valores.");return;
+        }
+        var totalCents=Math.round(amount*100),initialCents=Math.round(initial*100);
+        var recordedCents=existing?existing.payments.reduce(function(n,p){return n+Math.round(p.amount*100);},0):0;
+        if(initialCents+recordedCents>totalCents){toast("A soma dos pagamentos não pode ultrapassar o total da dívida.");return;}
+        var updated={
+          id:existing?existing.id:newId(),kind:kind,party:party.slice(0,90),description:description.slice(0,120),
+          total:totalCents/100,paidInitial:initialCents/100,
+          payments:existing?existing.payments.slice():[],
+          note:id("debtNote").value.trim().slice(0,300),createdAt:existing?existing.createdAt:Date.now()
+        };
+        if(existing)appState.debts[appState.debts.indexOf(existing)]=updated;
+        else appState.debts.push(updated);
+        if(save()){closeModals();render();navigate("debts");toast(existing?"Registro atualizado.":"Dívida cadastrada.");}
+      });
       id("budgetCategory").addEventListener("change",updateBudgetInput);
       id("budgetForm").addEventListener("submit",function(e){
         e.preventDefault();var c=id("budgetCategory").value,v=Number(id("budgetAmount").value);
@@ -547,6 +770,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           if(!raw||raw.version!==1||!Array.isArray(raw.transactions)||!raw.budgets||typeof raw.budgets!=="object"||Array.isArray(raw.budgets))throw Error("Este arquivo não é um backup válido do Meu Bolso.");
           var clean=sanitize(raw);
           if(clean.transactions.length!==raw.transactions.length)throw Error("O backup contém lançamentos inválidos.");
+          if(Array.isArray(raw.debts)&&clean.debts.length!==raw.debts.length)throw Error("O backup contém dívidas inválidas.");
           if(!confirm("Restaurar "+clean.transactions.length+" lançamento(s)? Seus dados atuais serão substituídos."))return;
           appState=clean;save();render();toast("Backup restaurado com sucesso.");
         }catch(err){toast(err.message||"Não foi possível importar o backup.");}
