@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0c0f11">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Meu Bolso: controle suas receitas, despesas e limites mensais com praticidade.">
   <title>Meu Bolso | Controle de Gastos</title>
   <style>
@@ -57,7 +57,41 @@
     html[data-theme="dark"] .bottom-nav .active{color:#c0f16e}
     html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] input:focus-visible{outline-color:#c0f16e}
 
-  </style>
+  
+/* TEMA BRANCO PADRÃO | Central de Links. Dados financeiros preservados. */
+html:not([data-theme="dark"]){
+ color-scheme:light;
+ --bg:#ffffff;--surface:#ffffff;--surface2:#f4f9f1;--ink:#203124;--muted:#617466;
+ --line:#dce7da;--green:#85b84d;--green-dark:#548730;--green-tint:#eef8e5;
+ --red:#da6971;--red-tint:#fff0f1;--blue:#628cff;
+ --shadow:0 12px 32px rgba(30,64,34,.055)
+}
+html:not([data-theme="dark"]) body{background:#fff;color:#203124}
+html:not([data-theme="dark"]) .sidebar{background:#f8fbf6;color:#355039;border-right:1px solid #dfead9}
+html:not([data-theme="dark"]) .brand{color:#223726}
+html:not([data-theme="dark"]) .brand-mark{background:#c0f16e;color:#23391c;box-shadow:none}
+html:not([data-theme="dark"]) .brand small,html:not([data-theme="dark"]) .nav-caption{color:#6b806e}
+html:not([data-theme="dark"]) .nav-link{color:#526d58}
+html:not([data-theme="dark"]) .nav-link:hover{color:#28482b;background:#eef7e8}
+html:not([data-theme="dark"]) .nav-link.active{color:#355e30;background:#e7f4dc}
+html:not([data-theme="dark"]) .nav-link.active .icon{color:#598e35}
+html:not([data-theme="dark"]) .sidebar-foot{background:#fff;border-color:#dce7da}
+html:not([data-theme="dark"]) .sidebar-foot strong{color:#233c28}
+html:not([data-theme="dark"]) .sidebar-foot p{color:#6b806f}
+html:not([data-theme="dark"]) .btn-primary{background:#c0f16e;border-color:#a7d969;color:#243718}
+html:not([data-theme="dark"]) .btn-primary:hover{background:#dbffab}
+html:not([data-theme="dark"]) .stat-card.emphasis,
+html:not([data-theme="dark"]) .summary-strip{background:#edf8e7;border-color:#d6eacb;color:#254526}
+html:not([data-theme="dark"]) .stat-card.emphasis strong,
+html:not([data-theme="dark"]) .summary-strip strong{color:#203b27}
+html:not([data-theme="dark"]) .stat-icon{background:#eaf5e3;color:#4f8535}
+html:not([data-theme="dark"]) .stat-icon.blue{background:#eef3ff;color:#6686c8}
+html:not([data-theme="dark"]) .card,html:not([data-theme="dark"]) .stat-card,html:not([data-theme="dark"]) .modal{background:#fff;border-color:#e0eadc}
+html:not([data-theme="dark"]) .topbar-title .slash{color:#9db099}
+html:not([data-theme="dark"]) .bottom-nav{background:#fff;border-color:#dce7da}
+html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
+
+</style>
 </head>
 <body>
   <svg aria-hidden="true" class="sr-only" xmlns="http://www.w3.org/2000/svg">
@@ -184,7 +218,7 @@
   <script>
     (function(){
       "use strict";
-      var KEY="meu-bolso-v1", THEME_KEY="meu-bolso-theme";
+      var KEY="meu-bolso-v1", THEME_KEY="meu-bolso-theme-v2";
       var expenseCats=["Alimentação","Moradia","Transporte","Saúde","Lazer","Compras","Educação","Contas","Outros"];
       var incomeCats=["Salário","Freelance","Vendas","Investimentos","Outros"];
       var icons={"Alimentação":"🍽","Moradia":"⌂","Transporte":"↗","Saúde":"✚","Lazer":"✦","Compras":"▣","Educação":"✎","Contas":"≡","Salário":"↓","Freelance":"◈","Vendas":"◉","Investimentos":"↗","Outros":"•"};
@@ -391,7 +425,7 @@
         id("themeButton").setAttribute("aria-label",value==="dark"?"Ativar modo claro":"Ativar modo escuro");
         try{localStorage.setItem(THEME_KEY,value);}catch(e){}
       }
-      var theme="dark";try{theme=localStorage.getItem(THEME_KEY)||"dark";}catch(e){}
+      var theme="light";try{theme=localStorage.getItem(THEME_KEY)||"light";}catch(e){}
       setTheme(theme==="dark"?"dark":"light");
       id("themeButton").addEventListener("click",function(){setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");});
       render();
