@@ -9,6 +9,8 @@ Um site responsivo para organizar as finanças pessoais, feito com HTML, CSS e J
 - Visualizar **saldo acumulado** até o mês selecionado e receitas e despesas mensais
 - Acompanhar gráficos dos últimos 6 meses e despesas por categoria
 - Definir **limites mensais de gastos** por categoria
+- Gerenciar **Contas da casa**: parcela do apartamento (R$ 625 por mês), condomínio (R$ 180), gás, luz e água; marcar como pagas e controlar os valores mês a mês
+- Acompanhar **Quem me deve**, **Minhas dívidas** e **Dívidas da Bianca**: valor total, pago/recebido, saldo restante, pagamentos parciais, edição e exclusão
 - Pesquisar e filtrar lançamentos
 - Alternar entre temas claro e escuro
 - Exportar CSV e fazer backup/restauração em JSON
@@ -41,6 +43,10 @@ Os registros financeiros são armazenados apenas no **localStorage** do navegado
 - Faça backups em **Meus dados → Backup JSON** e guarde o arquivo em local seguro.
 - Restaurações de backup substituem os dados locais existentes.
 - Os limites por categoria são os mesmos em todos os meses.
+- Os valores das contas da casa são tratados mês a mês. Apenas contas marcadas como pagas entram automaticamente nas despesas e gráficos, sem criar lançamentos repetidos.
+- Os registros de dívidas e cobranças são controles auxiliares e **não afetam automaticamente o saldo financeiro** para evitar contagem dupla. Registre no menu Lançamentos a entrada ou saída real, se desejar refletir os pagamentos no seu saldo.
+- O backup JSON inclui contas da casa e dívidas; o CSV inclui os lançamentos financeiros e as contas da casa pagas, mas não os cadastros de dívidas.
+- Nenhuma dívida pessoal, nome de devedor ou valor particular foi adicionado ao código público. Você preenche esses dados no site, e eles permanecem no seu navegador.
 
 ## Estrutura
 
