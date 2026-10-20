@@ -166,6 +166,25 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
 @media(max-width:620px){.debt-totals{grid-template-columns:1fr 1fr}.debt-total.receivable{grid-column:1/-1}.debt-section-head{align-items:flex-start;flex-direction:column}.debt-section-head .btn{width:100%}.debt-shortcut{flex-direction:column;align-items:flex-start}.debt-shortcut .btn{width:100%}}
 @media(max-width:440px){.debt-cards{grid-template-columns:1fr}.debt-money strong{font-size:18px}}
 
+
+/* SINCRONIZAÇÃO NA NUVEM */
+.cloud-sync-card{grid-column:1/-1;border-color:var(--line);background:var(--surface)}
+.cloud-sync-card h2{font-size:21px;margin:0 0 8px;letter-spacing:-.5px}
+.cloud-sync-card p{font-size:12px;line-height:1.6;color:var(--muted)}
+.cloud-status{border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:var(--surface2);color:var(--ink);font-size:12px;line-height:1.6;margin:15px 0}
+.cloud-status[data-error="true"]{border-color:#dba0a0;background:var(--red-tint);color:var(--ink)}
+.cloud-login{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.cloud-login label{font-size:11px;color:var(--muted);font-weight:700;flex:1;min-width:min(220px,100%)}
+.cloud-login input{display:block;width:100%;min-height:44px;margin-top:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:11px;padding:10px 12px}
+.cloud-login .btn{min-height:44px}
+.cloud-account{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cloud-account strong{flex:1;min-width:150px;overflow-wrap:anywhere}
+.cloud-choice{padding:14px 0 0}
+.cloud-choice p{margin-bottom:12px;font-weight:700}
+.cloud-choice-actions{display:flex;gap:10px;flex-wrap:wrap}
+.cloud-help{margin:12px 0 0;color:var(--muted);font-size:11px;line-height:1.6}
+[hidden]{display:none!important}
+@media(max-width:650px){.cloud-login .btn,.cloud-choice-actions .btn{width:100%}.cloud-account{align-items:stretch;flex-direction:column}.cloud-account .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -286,11 +305,35 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           <div class="budget-list-grid" id="budgetList"></div>
         </section>
         <section id="page-settings" class="page" aria-labelledby="settingsTitle">
-          <div class="page-heading"><div><p class="eyebrow">PRIVACIDADE E BACKUP</p><h1 id="settingsTitle">Meus dados</h1><p>Seu controle financeiro fica guardado neste navegador.</p></div></div>
+          <div class="page-heading"><div><p class="eyebrow">PRIVACIDADE E BACKUP</p><h1 id="settingsTitle">Meus dados</h1><p>Seus dados ficam neste dispositivo e podem ser sincronizados com sua conta privada na nuvem.</p></div></div>
           <div class="settings-grid">
+            <section class="card settings-card cloud-sync-card" id="cloudCard">
+              <h2><svg class="icon" style="vertical-align:middle;margin-right:8px"><use href="#i-upload"/></svg>Sincronizar em todos os dispositivos</h2>
+              <p>Entre com o mesmo e-mail no computador e no celular para acessar seus gastos, contas mensais, dívidas e pagamentos em ambos.</p>
+              <div id="cloudStatus" class="cloud-status" role="status" aria-live="polite">Preparando sincronização...</div>
+              <div id="cloudLogin" class="cloud-login" hidden>
+                <label for="cloudEmail">Seu e-mail
+                  <input id="cloudEmail" type="email" inputmode="email" placeholder="voce@exemplo.com" autocomplete="email" maxlength="254">
+                </label>
+                <button class="btn btn-primary" id="cloudLoginButton" type="button">Enviar link de acesso</button>
+              </div>
+              <div id="cloudAccount" class="cloud-account" hidden>
+                <strong id="cloudEmailLabel">Conta conectada</strong>
+                <button class="btn btn-primary" id="cloudManualSync" type="button">Verificar sincronização</button>
+                <button class="btn" id="cloudLogout" type="button">Sair da conta</button>
+              </div>
+              <div id="cloudActions" class="cloud-choice" hidden>
+                <p>Existem versões diferentes. Escolha qual deseja manter:</p>
+                <div class="cloud-choice-actions">
+                  <button class="btn" id="cloudUseCloud" type="button">Usar dados da nuvem</button>
+                  <button class="btn btn-primary" id="cloudUseDevice" type="button">Enviar dados deste dispositivo</button>
+                </div>
+              </div>
+              <div class="cloud-help">A sincronização precisa de internet e de um projeto Supabase configurado. Sem conexão, seus registros continuam guardados localmente. Em caso de conflito, nenhuma versão substitui outra sem sua confirmação. Continue fazendo backups JSON.</div>
+            </section>
             <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-download"/></svg></span><h2>Exportar seus dados</h2><p>Baixe uma planilha CSV dos lançamentos ou um backup completo em JSON, incluindo limites, contas da casa e dívidas.</p><div class="settings-actions"><button class="btn btn-primary" data-action="csv"><svg class="icon small-icon"><use href="#i-download"/></svg>Exportar CSV</button><button class="btn" data-action="backup"><svg class="icon small-icon"><use href="#i-download"/></svg>Backup JSON</button></div></section>
             <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-upload"/></svg></span><h2>Restaurar backup</h2><p>Importe um arquivo JSON criado pelo Meu Bolso. A restauração substitui os lançamentos e limites atuais.</p><div class="settings-actions"><button class="btn" data-action="import"><svg class="icon small-icon"><use href="#i-upload"/></svg>Importar JSON</button><input type="file" id="importFile" accept=".json,application/json" class="hidden"></div></section>
-            <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-shield"/></svg></span><h2>Privacidade local</h2><p>Sem conta, sem conexão bancária, sem envio para servidores. Seus dados não são sincronizados entre dispositivos. Para não perder informações, exporte backups regularmente.</p><div class="alert"><strong>Importante:</strong> apagar os dados do navegador ou navegar em modo anônimo pode eliminar seus registros.</div></section>
+            <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-shield"/></svg></span><h2>Privacidade dos dados</h2><p>Sem conexão bancária. Quando você configurar e entrar na nuvem, seus dados ficam associados à sua conta com acesso privado por usuário; caso contrário, ficam somente neste navegador.</p><div class="alert"><strong>Importante:</strong> sem nuvem configurada, apagar os dados do navegador pode eliminar seus registros. Guarde backups regularmente.</div></section>
             <section class="card settings-card"><span class="icon-circle" style="background:var(--red-tint);color:var(--red)"><svg class="icon"><use href="#i-trash"/></svg></span><h2>Apagar informações</h2><p>Exclua todos os lançamentos e limites armazenados neste navegador. Esta ação é permanente.</p><div class="settings-actions"><button class="btn btn-danger" data-action="erase">Apagar todos os dados</button></div></section>
           </div>
         </section>
@@ -431,7 +474,13 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         return obj;
       }
       function loadState(){try{var saved=localStorage.getItem(KEY);return saved?sanitize(JSON.parse(saved)):{transactions:[],budgets:{},houseBills:{},debts:[]};}catch(e){return {transactions:[],budgets:{},houseBills:{},debts:[]};}}
-      function save(){try{localStorage.setItem(KEY,JSON.stringify(appState));return true;}catch(e){toast("Não foi possível salvar. Verifique o espaço do navegador.");return false;}}
+      function save(){
+        try{
+          localStorage.setItem(KEY,JSON.stringify(appState));
+          if(window.MeuBolsoCloud&&typeof window.MeuBolsoCloud.onLocalSave==="function")window.MeuBolsoCloud.onLocalSave();
+          return true;
+        }catch(e){toast("Não foi possível salvar. Verifique o espaço do navegador.");return false;}
+      }
       function newId(){return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,11);}
       function money(v){return currency.format(v||0);}
       function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -785,8 +834,20 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       var theme="light";try{theme=localStorage.getItem(THEME_KEY)||"light";}catch(e){}
       setTheme(theme==="dark"?"dark":"light");
       id("themeButton").addEventListener("click",function(){setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");});
+      // Ponte de dados validada para o módulo de sincronização, sem expor credenciais.
+      window.MeuBolsoLocal={
+        read:function(){return sanitize(appState);},
+        apply:function(data){
+          appState=sanitize(data);
+          localStorage.setItem(KEY,JSON.stringify(appState));
+          render();
+        }
+      };
       render();
     })();
   </script>
+  <script src="supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="cloud-sync.js"></script>
 </body>
 </html>
