@@ -91,6 +91,37 @@ html:not([data-theme="dark"]) .topbar-title .slash{color:#9db099}
 html:not([data-theme="dark"]) .bottom-nav{background:#fff;border-color:#dce7da}
 html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
 
+
+/* CONTAS DA CASA | despesas mensais recorrentes */
+.bills-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:0 0 20px}
+.bills-total{border:1px solid var(--line);border-radius:15px;background:var(--surface);padding:18px 20px;min-width:0}
+.bills-total small{display:block;color:var(--muted);font-size:11px;font-weight:750;margin-bottom:11px}
+.bills-total strong{font-size:clamp(20px,2.7vw,29px);font-weight:840;letter-spacing:-.8px;overflow-wrap:anywhere}
+.bills-total.paid{background:var(--green-tint)}
+.bills-total.pending{background:var(--surface2)}
+.bills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+.bill-card{border:1px solid var(--line);border-radius:17px;padding:21px;background:var(--surface);display:flex;flex-direction:column;gap:15px;min-width:0}
+.bill-card.is-paid{border-color:#a6ce8b;background:linear-gradient(155deg,var(--surface),var(--green-tint))}
+.bill-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.bill-card h3{font-size:16px;margin:0 0 5px;letter-spacing:-.3px}
+.bill-card small{color:var(--muted);font-size:11px;line-height:1.5}
+.bill-status{white-space:nowrap;font-size:10px;font-weight:850;padding:6px 9px;border-radius:999px;background:var(--surface2);color:var(--muted)}
+.bill-card.is-paid .bill-status{color:#3e732a;background:#dff0d5}
+.bill-field{display:grid;gap:7px;font-size:11px;font-weight:780;color:var(--muted)}
+.bill-field input{display:block;width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:12px 13px;color:var(--ink);font-size:19px;font-weight:820}
+.bill-field input:focus{outline:2px solid #a3d482;outline-offset:1px}
+.bill-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:8px;margin-top:auto}
+.bill-actions button{min-height:42px;white-space:normal;padding:10px 8px;font-size:11px}
+.bill-info{color:var(--muted);font-size:11px;line-height:1.55;margin:0}
+.bills-help{border:1px solid var(--line);border-radius:13px;background:var(--surface2);padding:15px 17px;margin-top:18px;font-size:12px;line-height:1.7;color:var(--muted)}
+.bills-help strong{color:var(--ink)}
+.bills-shortcut{display:flex;justify-content:space-between;align-items:center;gap:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:19px 22px;margin:0 0 21px}
+.bills-shortcut h2{font-size:17px;letter-spacing:-.3px;margin:0 0 6px}
+.bills-shortcut p{color:var(--muted);font-size:12px;margin:0;line-height:1.5}
+.bills-shortcut .btn{flex-shrink:0}
+@media(max-width:750px){.bills-summary{grid-template-columns:1fr 1fr}.bills-total:first-child{grid-column:1/-1}.bills-shortcut{align-items:flex-start;flex-direction:column}.bills-shortcut .btn{width:100%}.bottom-nav button{min-width:0;flex:1}}
+@media(max-width:480px){.bills-grid{grid-template-columns:1fr}.bills-total{padding:15px}.bills-total strong{font-size:20px}.bill-actions{grid-template-columns:1fr 1fr}}
+
 </style>
 </head>
 <body>
@@ -123,6 +154,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       <nav class="nav-list">
         <button class="nav-link active" data-page-link="dashboard"><svg class="icon"><use href="#i-home"/></svg>Visão geral</button>
         <button class="nav-link" data-page-link="transactions"><svg class="icon"><use href="#i-list"/></svg>Lançamentos</button>
+        <button class="nav-link" data-page-link="bills"><svg class="icon"><use href="#i-home"/></svg>Contas da casa</button>
         <button class="nav-link" data-page-link="budgets"><svg class="icon"><use href="#i-target"/></svg>Limites de gastos</button>
         <button class="nav-link" data-page-link="settings"><svg class="icon"><use href="#i-settings"/></svg>Meus dados</button>
       </nav>
@@ -146,6 +178,10 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
             <article class="stat-card"><div class="stat-top"><span class="stat-label">Saídas do mês</span><span class="stat-icon red"><svg class="icon"><use href="#i-arrowup"/></svg></span></div><div class="stat-value" id="expense">R$ 0,00</div><div class="stat-sub">Tudo que você gastou</div></article>
             <article class="stat-card"><div class="stat-top"><span class="stat-label">Taxa de economia</span><span class="stat-icon blue"><svg class="icon"><use href="#i-trend"/></svg></span></div><div class="stat-value" id="savings">—</div><div class="stat-sub">Entradas menos saídas, em %</div></article>
           </div>
+          <section class="bills-shortcut">
+            <div><h2>Contas da casa</h2><p id="dashboardBillsSummary">Parcela do apartamento, condomínio, gás, luz e água.</p></div>
+            <button class="btn btn-primary" data-page-link="bills">Gerenciar contas</button>
+          </section>
           <div class="columns">
             <section class="card"><div class="card-head"><div><h2>Evolução financeira</h2><div class="hint">Últimos 6 meses até a seleção</div></div><div class="legend-inline"><span><i class="legend-pill"></i> Entradas</span><span><i class="legend-pill expense"></i> Saídas</span></div></div><div class="chart-wrap"><div class="chart" id="chartBars" aria-label="Gráfico de entradas e saídas dos últimos seis meses"></div></div></section>
             <section class="card"><div class="card-head"><div><h2>Para onde foi o dinheiro?</h2><div class="hint">Despesas por categoria no mês</div></div></div><div class="donut-wrap"><div class="donut" id="donut"><div class="donut-center"><span>Gastos totais</span><strong id="donutAmount">R$ 0,00</strong></div></div><div class="cat-legend" id="categoryLegend"></div></div></section>
@@ -164,6 +200,16 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           </div>
           <section class="card"><p class="list-summary" id="listSummary"></p><div class="row-list" id="allTransactions"></div></section>
         </section>
+        <section id="page-bills" class="page" aria-labelledby="billsTitle">
+          <div class="page-heading"><div><p class="eyebrow">DESPESAS RECORRENTES</p><h1 id="billsTitle">Contas da casa</h1><p>Acompanhe as contas de <span class="month-label">este mês</span> e marque as que já foram pagas.</p></div></div>
+          <div class="bills-summary">
+            <article class="bills-total"><small>Total previsto no mês</small><strong id="billsPlanned">R$ 805,00</strong></article>
+            <article class="bills-total paid"><small>Contas pagas</small><strong id="billsPaid">R$ 0,00</strong></article>
+            <article class="bills-total pending"><small>Falta pagar</small><strong id="billsPending">R$ 805,00</strong></article>
+          </div>
+          <div class="bills-grid" id="billsGrid"></div>
+          <div class="bills-help"><strong>Como funciona:</strong> apartamento (R$ 625) e condomínio (R$ 180) aparecem automaticamente todos os meses. Preencha gás, luz e água conforme receber as contas. Clique em <strong>Marcar como pago</strong> somente depois de pagar. As contas pagas entram nas saídas e nos gráficos do mês selecionado, sem duplicar o lançamento.</div>
+        </section>
         <section id="page-budgets" class="page" aria-labelledby="budgetsTitle">
           <div class="page-heading"><div><p class="eyebrow">PLANEJAMENTO</p><h1 id="budgetsTitle">Limites de gastos</h1><p>Defina quanto pode gastar em cada categoria, por mês.</p></div><button class="btn btn-primary" data-action="budget"><svg class="icon"><use href="#i-plus"/></svg>Definir limite</button></div>
           <div class="summary-strip"><div><small>Total de limites mensais</small><strong id="totalBudgets">R$ 0,00</strong></div><div><small>Gastos nas categorias com limite</small><strong id="usedBudgets">R$ 0,00</strong></div><div><small>Limites definidos</small><strong id="countBudgets">0</strong><p>Os mesmos limites valem para todos os meses.</p></div></div>
@@ -172,7 +218,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         <section id="page-settings" class="page" aria-labelledby="settingsTitle">
           <div class="page-heading"><div><p class="eyebrow">PRIVACIDADE E BACKUP</p><h1 id="settingsTitle">Meus dados</h1><p>Seu controle financeiro fica guardado neste navegador.</p></div></div>
           <div class="settings-grid">
-            <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-download"/></svg></span><h2>Exportar seus dados</h2><p>Baixe uma planilha CSV dos lançamentos ou um backup completo em JSON, incluindo os limites.</p><div class="settings-actions"><button class="btn btn-primary" data-action="csv"><svg class="icon small-icon"><use href="#i-download"/></svg>Exportar CSV</button><button class="btn" data-action="backup"><svg class="icon small-icon"><use href="#i-download"/></svg>Backup JSON</button></div></section>
+            <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-download"/></svg></span><h2>Exportar seus dados</h2><p>Baixe uma planilha CSV dos lançamentos ou um backup completo em JSON, incluindo limites e contas da casa.</p><div class="settings-actions"><button class="btn btn-primary" data-action="csv"><svg class="icon small-icon"><use href="#i-download"/></svg>Exportar CSV</button><button class="btn" data-action="backup"><svg class="icon small-icon"><use href="#i-download"/></svg>Backup JSON</button></div></section>
             <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-upload"/></svg></span><h2>Restaurar backup</h2><p>Importe um arquivo JSON criado pelo Meu Bolso. A restauração substitui os lançamentos e limites atuais.</p><div class="settings-actions"><button class="btn" data-action="import"><svg class="icon small-icon"><use href="#i-upload"/></svg>Importar JSON</button><input type="file" id="importFile" accept=".json,application/json" class="hidden"></div></section>
             <section class="card settings-card"><span class="icon-circle"><svg class="icon"><use href="#i-shield"/></svg></span><h2>Privacidade local</h2><p>Sem conta, sem conexão bancária, sem envio para servidores. Seus dados não são sincronizados entre dispositivos. Para não perder informações, exporte backups regularmente.</p><div class="alert"><strong>Importante:</strong> apagar os dados do navegador ou navegar em modo anônimo pode eliminar seus registros.</div></section>
             <section class="card settings-card"><span class="icon-circle" style="background:var(--red-tint);color:var(--red)"><svg class="icon"><use href="#i-trash"/></svg></span><h2>Apagar informações</h2><p>Exclua todos os lançamentos e limites armazenados neste navegador. Esta ação é permanente.</p><div class="settings-actions"><button class="btn btn-danger" data-action="erase">Apagar todos os dados</button></div></section>
@@ -184,6 +230,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
   <nav class="bottom-nav" aria-label="Navegação para dispositivos móveis">
     <button class="active" data-page-link="dashboard"><svg class="icon"><use href="#i-home"/></svg>Início</button>
     <button data-page-link="transactions"><svg class="icon"><use href="#i-list"/></svg>Lançamentos</button>
+    <button data-page-link="bills"><svg class="icon"><use href="#i-home"/></svg>Casa</button>
     <button data-page-link="budgets"><svg class="icon"><use href="#i-target"/></svg>Limites</button>
     <button data-page-link="settings"><svg class="icon"><use href="#i-settings"/></svg>Dados</button>
   </nav>
@@ -226,6 +273,13 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       var currency=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
       var monthFormat=new Intl.DateTimeFormat("pt-BR",{month:"long",year:"numeric"});
       var shortMonthFormat=new Intl.DateTimeFormat("pt-BR",{month:"short"});
+      var billDefinitions=[
+        {key:"apartment",label:"Parcela do apartamento",defaultAmount:625,fixed:true},
+        {key:"condo",label:"Condomínio",defaultAmount:180,fixed:true},
+        {key:"gas",label:"Gás",defaultAmount:null,fixed:false},
+        {key:"electricity",label:"Luz",defaultAmount:null,fixed:false},
+        {key:"water",label:"Água",defaultAmount:null,fixed:false}
+      ];
       var appState=loadState();
       var now=new Date(), selectedMonth=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
       var page="dashboard", transactionFilter="all", categoryFilter="all", query="", toastTimeout;
@@ -233,7 +287,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       function validAmount(v){var n=Number(v);return Number.isFinite(n)&&n>0&&n<=999999999.99;}
       function validDate(s){if(typeof s!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;var d=new Date(s+"T12:00:00");return !isNaN(d.getTime())&&d.getFullYear()===Number(s.slice(0,4))&&d.getMonth()+1===Number(s.slice(5,7))&&d.getDate()===Number(s.slice(8,10));}
       function sanitize(data){
-        var obj={transactions:[],budgets:{}};
+        var obj={transactions:[],budgets:{},houseBills:{}};
         if(!data||typeof data!=="object"||!Array.isArray(data.transactions))return obj;
         var seen=new Set();
         data.transactions.slice(0,20000).forEach(function(t){
@@ -246,9 +300,23 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
           obj.transactions.push({id:ident,type:t.type,description:desc,amount:Math.round(Number(t.amount)*100)/100,date:t.date,category:allowed.includes(t.category)?t.category:"Outros",note:String(t.note||"").slice(0,300),createdAt:Number.isFinite(Number(t.createdAt))?Number(t.createdAt):0});
         });
         if(data.budgets&&typeof data.budgets==="object"&&!Array.isArray(data.budgets))expenseCats.forEach(function(c){if(validAmount(data.budgets[c]))obj.budgets[c]=Math.round(Number(data.budgets[c])*100)/100;});
+        if(data.houseBills&&typeof data.houseBills==="object"&&!Array.isArray(data.houseBills)){
+          Object.keys(data.houseBills).slice(0,240).forEach(function(month){
+            if(!/^\\d{4}-(0[1-9]|1[0-2])$/.test(month))return;
+            var group=data.houseBills[month];if(!group||typeof group!=="object"||Array.isArray(group))return;
+            billDefinitions.forEach(function(def){
+              var b=group[def.key];if(!b||typeof b!=="object")return;
+              var amount=b.amount==null?null:Number(b.amount);
+              if(amount!==null&&!validAmount(amount))return;
+              if(def.fixed&&amount===null)amount=def.defaultAmount;
+              if(!obj.houseBills[month])obj.houseBills[month]={};
+              obj.houseBills[month][def.key]={amount:amount===null?null:Math.round(amount*100)/100,paid:!!b.paid&&validAmount(amount),paidAt:typeof b.paidAt==="string"&&validDate(b.paidAt)?b.paidAt:null};
+            });
+          });
+        }
         return obj;
       }
-      function loadState(){try{var saved=localStorage.getItem(KEY);return saved?sanitize(JSON.parse(saved)):{transactions:[],budgets:{}};}catch(e){return {transactions:[],budgets:{}};}}
+      function loadState(){try{var saved=localStorage.getItem(KEY);return saved?sanitize(JSON.parse(saved)):{transactions:[],budgets:{},houseBills:{}};}catch(e){return {transactions:[],budgets:{},houseBills:{}};}}
       function save(){try{localStorage.setItem(KEY,JSON.stringify(appState));return true;}catch(e){toast("Não foi possível salvar. Verifique o espaço do navegador.");return false;}}
       function newId(){return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,11);}
       function money(v){return currency.format(v||0);}
@@ -259,7 +327,25 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       function monthDate(value){return new Date(Number(value.slice(0,4)),Number(value.slice(5,7))-1,1);}
       function addMonths(value,offset){var d=monthDate(value);d.setMonth(d.getMonth()+offset);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");}
       function byRecent(a,b){return b.date.localeCompare(a.date)||(b.createdAt||0)-(a.createdAt||0);}
-      function inMonth(){return appState.transactions.filter(function(t){return monthOf(t.date)===selectedMonth;});}
+      function billRecord(month,def){
+        var stored=appState.houseBills[month]&&appState.houseBills[month][def.key];
+        return {amount:stored&&Object.prototype.hasOwnProperty.call(stored,"amount")?stored.amount:def.defaultAmount,paid:!!(stored&&stored.paid),paidAt:stored&&stored.paidAt||null};
+      }
+      function allEntries(){
+        var entries=appState.transactions.slice();
+        Object.keys(appState.houseBills||{}).forEach(function(month){
+          if(!/^\\d{4}-(0[1-9]|1[0-2])$/.test(month))return;
+          billDefinitions.forEach(function(def){
+            var b=billRecord(month,def);
+            if(!b.paid||!validAmount(b.amount))return;
+            entries.push({id:"bill:"+month+":"+def.key,type:"expense",description:def.label,
+              amount:b.amount,date:month+"-01",category:"Moradia",
+              note:"Conta mensal paga. Mês de referência: "+month,createdAt:0,virtualBill:true,billKey:def.key});
+          });
+        });
+        return entries;
+      }
+      function inMonth(){return allEntries().filter(function(t){return monthOf(t.date)===selectedMonth;});}
       function summarize(list){return list.reduce(function(s,t){s[t.type]+=t.amount;return s;},{income:0,expense:0});}
       function setText(element,value){id(element).textContent=value;}
       function toast(msg){var el=id("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimeout);toastTimeout=setTimeout(function(){el.classList.remove("show");},3800);}
@@ -267,14 +353,58 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       function barClass(n){return n>=100?"danger":n>=80?"warning":"";}
       function render(){
         var list=inMonth(),s=summarize(list);
-        var accrued=appState.transactions.reduce(function(a,t){return a+(monthOf(t.date)<=selectedMonth?(t.type==="income"?t.amount:-t.amount):0);},0);
+        var accrued=allEntries().reduce(function(a,t){return a+(monthOf(t.date)<=selectedMonth?(t.type==="income"?t.amount:-t.amount):0);},0);
         setText("balance",money(accrued));setText("income",money(s.income));setText("expense",money(s.expense));
         setText("savings",s.income>0?Math.round((s.income-s.expense)/s.income*100)+"%":"—");
         document.querySelectorAll(".month-label").forEach(function(n){n.textContent=monthFormat.format(monthDate(selectedMonth));});
-        renderChart();renderDonut(list,s.expense);renderRecent(list);renderBudgets(list);renderTransactions(list);
+        renderChart();renderDonut(list,s.expense);renderRecent(list);renderBudgets(list);renderTransactions(list);renderBills();
+      }
+
+      function renderBills(){
+        var planned=0,paid=0,known=0;
+        billDefinitions.forEach(function(def){
+          var bill=billRecord(selectedMonth,def);
+          if(validAmount(bill.amount)){
+            planned+=bill.amount;
+            known++;
+            if(bill.paid)paid+=bill.amount;
+          }
+        });
+        setText("billsPlanned",money(planned));
+        setText("billsPaid",money(paid));
+        setText("billsPending",money(planned-paid));
+        setText("dashboardBillsSummary",money(planned-paid)+" pendentes · "+money(paid)+" já pagos · "+known+" contas com valor informado");
+        id("billsGrid").innerHTML=billDefinitions.map(function(def){
+          var b=billRecord(selectedMonth,def),value=validAmount(b.amount)?b.amount.toFixed(2):"";
+          var note=b.paid&&b.paidAt?"Marcado como pago em "+prettyDate(b.paidAt):def.fixed?"Despesa fixa mensal":"Informe o valor quando chegar a conta";
+          return '<article class="bill-card '+(b.paid?"is-paid":"")+'">'+
+            '<div class="bill-card-head"><div><h3>'+esc(def.label)+'</h3><small>'+esc(def.fixed?"Todos os meses":"Valor variável por mês")+'</small></div><span class="bill-status">'+(b.paid?"Paga":"Pendente")+'</span></div>'+
+            '<label class="bill-field" for="bill-'+def.key+'">Valor deste mês (R$)<input id="bill-'+def.key+'" data-bill-input="'+def.key+'" type="number" inputmode="decimal" min="0.01" max="999999999.99" step="0.01" placeholder="Informe o valor" value="'+value+'"></label>'+
+            '<p class="bill-info">'+esc(note)+'</p>'+
+            '<div class="bill-actions"><button type="button" class="btn" data-action="bill-save" data-bill="'+def.key+'">Salvar valor</button>'+
+            '<button type="button" class="btn '+(b.paid?"":"btn-primary")+'" data-action="bill-toggle" data-bill="'+def.key+'">'+(b.paid?"Desfazer pagamento":"Marcar como pago")+'</button></div></article>';
+        }).join("");
+      }
+      function editBill(key,toggle){
+        var def=billDefinitions.find(function(d){return d.key===key;});
+        if(!def)return;
+        var field=id("bill-"+key),raw=field.value.trim();
+        var amount=raw===""?null:Number(raw);
+        if(amount!==null&&!validAmount(amount)){toast("Informe um valor válido maior que zero.");field.focus();return;}
+        if(def.fixed&&amount===null){toast("Informe o valor da parcela ou do condomínio.");field.focus();return;}
+        var previous=billRecord(selectedMonth,def);
+        if(toggle&&!previous.paid&&!validAmount(amount)){toast("Informe o valor antes de marcar como pago.");field.focus();return;}
+        var paid=toggle?!previous.paid:previous.paid;
+        if(!validAmount(amount))paid=false;
+        if(!appState.houseBills[selectedMonth])appState.houseBills[selectedMonth]={};
+        appState.houseBills[selectedMonth][key]={amount:amount===null?null:Math.round(amount*100)/100,paid:paid,paidAt:paid?(previous.paid?previous.paidAt||today():today()):null};
+        if(save()){
+          render();
+          toast(toggle?(paid?"Conta marcada como paga.":"Pagamento desmarcado."):"Valor salvo para "+monthFormat.format(monthDate(selectedMonth))+".");
+        }
       }
       function renderChart(){
-        var months=Array.from({length:6},function(_,i){var m=addMonths(selectedMonth,i-5);return {key:m,summary:summarize(appState.transactions.filter(function(t){return monthOf(t.date)===m;}))};});
+        var months=Array.from({length:6},function(_,i){var m=addMonths(selectedMonth,i-5);return {key:m,summary:summarize(allEntries().filter(function(t){return monthOf(t.date)===m;}))};});
         var max=Math.max(1,...months.map(function(m){return Math.max(m.summary.income,m.summary.expense);}));
         id("chartBars").innerHTML=months.map(function(m){
           var text=shortMonthFormat.format(monthDate(m.key)).replace(".","");
@@ -294,7 +424,7 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       }
       function row(t){
         var outgoing=t.type==="expense";
-        return '<div class="transaction-row"><div class="txn-avatar '+(outgoing?"out":"")+'">'+(icons[t.category]||"•")+'</div><div class="txn-info"><strong title="'+esc(t.description)+'">'+esc(t.description)+'</strong><small>'+esc(t.category)+' · '+prettyDate(t.date)+'</small></div><span class="txn-amount '+(outgoing?"out":"in")+'">'+(outgoing?"− ":"+ ")+money(t.amount)+'</span><div class="row-actions"><button data-action="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="Editar '+esc(t.description)+'"><svg class="icon small-icon"><use href="#i-edit"/></svg></button><button data-action="delete" data-id="'+esc(t.id)+'" title="Excluir" aria-label="Excluir '+esc(t.description)+'"><svg class="icon small-icon"><use href="#i-trash"/></svg></button></div></div>';
+        return '<div class="transaction-row"><div class="txn-avatar '+(outgoing?"out":"")+'">'+(icons[t.category]||"•")+'</div><div class="txn-info"><strong title="'+esc(t.description)+'">'+esc(t.description)+'</strong><small>'+esc(t.virtualBill?"Moradia · Conta mensal paga · "+monthFormat.format(monthDate(monthOf(t.date))):t.category+" · "+prettyDate(t.date))+'</small></div><span class="txn-amount '+(outgoing?"out":"in")+'">'+(outgoing?"− ":"+ ")+money(t.amount)+'</span><div class="row-actions">'+(t.virtualBill?'<button data-action="bills" title="Gerenciar conta mensal" aria-label="Gerenciar conta mensal"><svg class="icon small-icon"><use href="#i-edit"/></svg></button>':'<button data-action="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="Editar '+esc(t.description)+'"><svg class="icon small-icon"><use href="#i-edit"/></svg></button><button data-action="delete" data-id="'+esc(t.id)+'" title="Excluir" aria-label="Excluir '+esc(t.description)+'"><svg class="icon small-icon"><use href="#i-trash"/></svg></button>')+'</div></div>';
       }
       function renderRecent(list){var rec=list.slice().sort(byRecent).slice(0,5);id("recentTransactions").innerHTML=rec.length?rec.map(row).join(""):empty("Nenhum lançamento ainda","Use o botão Novo lançamento para começar.");}
       function renderBudgets(list){
@@ -326,9 +456,9 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
         id("allTransactions").innerHTML=list.length?list.map(row).join(""):empty("Nada por aqui","Experimente mudar os filtros ou adicionar um lançamento neste mês.");
       }
       function navigate(target){
-        if(!["dashboard","transactions","budgets","settings"].includes(target))return;
+        if(!["dashboard","transactions","bills","budgets","settings"].includes(target))return;
         page=target;
-        var names={dashboard:"Visão geral",transactions:"Lançamentos",budgets:"Limites de gastos",settings:"Meus dados"};
+        var names={dashboard:"Visão geral",transactions:"Lançamentos",bills:"Contas da casa",budgets:"Limites de gastos",settings:"Meus dados"};
         document.querySelectorAll(".page").forEach(function(s){s.classList.toggle("active",s.id==="page-"+target);});
         document.querySelectorAll("[data-page-link]").forEach(function(b){b.classList.toggle("active",b.dataset.pageLink===target);});
         setText("breadcrumb",names[target]);window.scrollTo({top:0,behavior:"smooth"});
@@ -357,23 +487,26 @@ html:not([data-theme="dark"]) .bottom-nav .active{color:#427a38}
       function safeCsv(value){var s=String(value==null?"":value);if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
       function exportCsv(){
         var header=["Data","Tipo","Descrição","Categoria","Valor (R$)","Observações"];
-        var rows=appState.transactions.slice().sort(byRecent).map(function(t){return [prettyDate(t.date),t.type==="income"?"Entrada":"Saída",t.description,t.category,t.amount.toFixed(2).replace(".",","),t.note].map(safeCsv).join(";");});
+        var rows=allEntries().slice().sort(byRecent).map(function(t){return [t.virtualBill?monthOf(t.date)+" (mês de referência)":prettyDate(t.date),t.type==="income"?"Entrada":"Saída",t.description,t.category,t.amount.toFixed(2).replace(".",","),t.note].map(safeCsv).join(";");});
         download("meu-bolso-lancamentos.csv","\uFEFF"+[header.map(safeCsv).join(";")].concat(rows).join("\r\n"),"text/csv;charset=utf-8");toast("Planilha CSV exportada.");
       }
-      function backup(){download("meu-bolso-backup-"+today()+".json",JSON.stringify({version:1,exportedAt:new Date().toISOString(),transactions:appState.transactions,budgets:appState.budgets},null,2),"application/json;charset=utf-8");toast("Backup completo exportado.");}
+      function backup(){download("meu-bolso-backup-"+today()+".json",JSON.stringify({version:1,exportedAt:new Date().toISOString(),transactions:appState.transactions,budgets:appState.budgets,houseBills:appState.houseBills},null,2),"application/json;charset=utf-8");toast("Backup completo exportado.");}
       function handleAction(b){
         var action=b.dataset.action;
         if(action==="add")openTransaction(null);
         if(action==="edit"){var record=appState.transactions.find(function(t){return t.id===b.dataset.id;});if(record)openTransaction(record);}
         if(action==="delete")removeTransaction(b.dataset.id);
         if(action==="budget")openBudget(b.dataset.category);
+        if(action==="bills")navigate("bills");
+        if(action==="bill-save")editBill(b.dataset.bill,false);
+        if(action==="bill-toggle")editBill(b.dataset.bill,true);
         if(action==="close")closeModals();
         if(action==="csv")exportCsv();
         if(action==="backup")backup();
         if(action==="import")id("importFile").click();
         if(action==="erase"){
           if(prompt('Isso apagará TODOS os dados deste navegador. Digite APAGAR para confirmar:')!=="APAGAR")return;
-          appState={transactions:[],budgets:{}};save();render();toast("Todos os dados foram apagados.");
+          appState={transactions:[],budgets:{},houseBills:{}};save();render();toast("Todos os dados foram apagados.");
         }
       }
       document.addEventListener("click",function(e){
